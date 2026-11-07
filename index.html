@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[Your Name] | Cybersecurity Project Hub</title>
+<meta name="description" content="Hands-on cybersecurity projects, labs and evidence by [Your Name].">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <a href="#top" class="logo">[Your Name]<span>_</span></a>
+  <button class="burger" aria-label="Menu" aria-expanded="false">&#9776;</button>
+  <nav id="menu">
+    <a href="#about">About</a><a href="#projects">Projects</a><a href="#competitions">Competitions</a>
+    <a href="#learning">Learning</a><a href="#certs">Certs</a><a href="#community">Community</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+<section class="hero wrap">
+  <div>
+    <p class="eyebrow">// cybersecurity portfolio</p>
+    <h1>[Your Name]</h1>
+    <p class="headline">Aspiring cybersecurity analyst, learning by scanning, breaking and securing real lab environments.</p>
+    <p class="lead">This site is the evidence behind my CV: projects, methods, findings and write-ups.</p>
+    <div class="btns">
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn" href="https://github.com/YOUR-USERNAME" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/YOUR-PROFILE" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <div class="term" aria-hidden="true">
+    <div class="dots"><i></i><i></i><i></i><span>kali@kali: ~</span></div>
+    <pre id="termOut"></pre>
+  </div>
+</section>
+
+<section id="about" class="wrap reveal">
+  <h2><span>01</span> About</h2>
+  <div class="about">
+    <p>I am drawn to the question every defender asks first: <em>what can an attacker see?</em> I enjoy network reconnaissance, understanding how services are exposed, and turning raw scan output into clear, prioritised risk.</p>
+    <p>Right now I am working through a hands-on cybersecurity internship, building a lab on Kali Linux and VirtualBox, and documenting each task so the work can be checked, not just claimed. Next on my list: packet analysis with Wireshark and UDP scanning.</p>
+    <p class="note">Edit this text to add your own story, location and goals.</p>
+  </div>
+</section>
+
+<section id="projects" class="wrap reveal">
+  <h2><span>02</span> Projects</h2>
+  <p class="sub">Select a project for the full breakdown and evidence.</p>
+  <div id="projectGrid" class="grid"></div>
+</section>
+
+<section id="competitions" class="wrap reveal">
+  <h2><span>03</span> Competitions</h2>
+  <p class="sub">CTFs, hackathons and challenges.</p>
+  <div class="grid">
+    <article class="card ph">
+      <span class="tag">Placeholder</span>
+      <h3>[Competition name]</h3>
+      <dl>
+        <dt>Result</dt><dd>[Placement / score]</dd>
+        <dt>What it involved</dt><dd>[Format, duration, team or solo]</dd>
+        <dt>Areas covered</dt><dd>[Web, crypto, forensics, networking...]</dd>
+        <dt>What I learned</dt><dd>[Key lessons]</dd>
+        <dt>Evidence</dt><dd><span class="link off">[Scoreboard / write-up link]</span></dd>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<section id="learning" class="wrap reveal">
+  <h2><span>04</span> Practical Learning</h2>
+  <p class="sub">Hands-on labs and rooms. These are practice, not certifications.</p>
+  <div class="grid">
+    <article class="card ph">
+      <span class="tag">Placeholder</span>
+      <h3>TryHackMe</h3>
+      <div class="stats"><div><b>[N]</b><small>rooms completed</small></div><div><b>[N]</b><small>learning paths</small></div></div>
+      <p><strong>Areas covered:</strong> [e.g. networking, Linux, web, Nmap]</p>
+      <p><a class="link off">[TryHackMe profile link]</a> <a class="link off">[Selected write-ups]</a></p>
+    </article>
+    <article class="card ph">
+      <span class="tag">Placeholder</span>
+      <h3>[Other platform]</h3>
+      <p>[Hack The Box, home lab, OverTheWire, etc.]</p>
+      <p><a class="link off">[Profile / evidence link]</a></p>
+    </article>
+  </div>
+</section>
+
+<section id="certs" class="wrap reveal">
+  <h2><span>05</span> Certifications</h2>
+  <div class="grid">
+    <article class="card ph">
+      <span class="tag">Placeholder</span>
+      <h3>[Certification name]</h3>
+      <p><strong>Why I took it:</strong> [Reason]</p>
+      <p><strong>Areas covered:</strong> [Topics]</p>
+      <p><a class="link off">[Certificate link]</a></p>
+    </article>
+  </div>
+</section>
+
+<section id="community" class="wrap reveal">
+  <h2><span>06</span> Achievements &amp; Community</h2>
+  <div class="grid">
+    <article class="card ph">
+      <span class="tag">Placeholder</span>
+      <h3>[Achievement / volunteering / mentoring]</h3>
+      <p>[What you did and the impact, with numbers if possible.]</p>
+      <p><a class="link off">[Evidence link]</a></p>
+    </article>
+  </div>
+</section>
+
+<section id="contact" class="wrap reveal">
+  <h2><span>07</span> Contact</h2>
+  <div class="contact">
+    <a href="https://github.com/YOUR-USERNAME" target="_blank" rel="noopener">GitHub<small>github.com/YOUR-USERNAME</small></a>
+    <a href="https://www.linkedin.com/in/YOUR-PROFILE" target="_blank" rel="noopener">LinkedIn<small>linkedin.com/in/YOUR-PROFILE</small></a>
+    <a href="mailto:your.email@example.com">Email<small>your.email@example.com</small></a>
+  </div>
+</section>
+</main>
+
+<footer><p>&copy; <span id="yr"></span> [Your Name]. Lab work performed only on systems I own or am authorised to test.</p></footer>
+
+<dialog id="modal"><div class="mbody"></div></dialog>
+<script src="script.js"></script>
+</body>
+</html>
