@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Port Scanning (Task 1) | Seerat Fatima | Cybersecurity Portfolio</title>
+<meta name="description" content="Task 1 of my Elevate Labs cybersecurity internship: scanning a local network with Nmap to find open ports and assess exposure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f4f7;--surface:#fff;--ink:#101a2b;--muted:#525f73;--line:#d5dbe4;--accent:#0b5fd1;--open:#b4620a;--open-bg:#fbe9d0;--term:#0d1626;--term-ink:#d6e2f5;--term-dim:#7d8ca6;
+--head:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0a111d;--surface:#111b2c;--ink:#e8eef8;--muted:#9aa8bf;--line:#243249;--accent:#6aa6ff;--open:#f2b052;--open-bg:#3a2a12;--term:#060c16}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--body)}
+a{color:var(--accent)}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+header.nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+.brand{font:700 1.05rem var(--head);text-decoration:none;color:var(--ink)}
+.nav nav{display:flex;gap:18px;overflow-x:auto;font-size:.95rem}.nav nav a{color:var(--muted);text-decoration:none;white-space:nowrap}.nav nav a:hover{color:var(--ink)}
+h1,h2,h3{font-family:var(--head);line-height:1.12;margin:0}
+h1{font-size:clamp(2.3rem,6vw,4.2rem);font-weight:800;letter-spacing:-.02em;max-width:14ch}
+h2{font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;margin-bottom:14px}
+h3{font-size:1.15rem;font-weight:700;margin:22px 0 8px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+.hero{padding:56px 0 48px;border:0}
+.hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:36px;align-items:center}
+.lede{font-size:1.2rem;color:var(--muted);max-width:46ch;margin:18px 0 24px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--muted);font-size:.95rem;margin:0 0 24px;padding:0;list-style:none}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:11px 20px;border-radius:6px;font-weight:500;text-decoration:none;border:1px solid var(--accent)}
+.btn.p{background:var(--accent);color:#fff}@media (prefers-color-scheme:dark){.btn.p{color:#08111f}}
+.term{background:var(--term);color:var(--term-ink);border-radius:10px;padding:16px 18px;font:400 .82rem/1.6 var(--mono);overflow-x:auto;box-shadow:0 0 0 1px var(--line)}
+.term .bar{color:var(--term-dim);margin-bottom:8px}.term .ln{white-space:pre;min-height:1.6em}
+.term .o{color:#f2b052}.term .d{color:var(--term-dim)}.term .c{color:#8fc1ff}
+.cur{display:inline-block;width:.55em;height:1em;background:var(--term-ink);vertical-align:-2px;animation:b 1s steps(2) infinite}@keyframes b{50%{opacity:0}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px 22px}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .9rem var(--head);background:color-mix(in srgb,var(--line) 35%,transparent)}tr:last-child td{border-bottom:0}
+code,.m{font-family:var(--mono);font-size:.88em}code{background:color-mix(in srgb,var(--line) 45%,transparent);padding:1px 6px;border-radius:4px}
+.pill{font:500 .8rem var(--mono);padding:2px 8px;border-radius:99px;background:var(--open-bg);color:var(--open)}.pill.f{background:color-mix(in srgb,var(--line) 60%,transparent);color:var(--muted)}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s;display:grid;gap:12px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start}
+ol.steps li::before{content:counter(s);width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--bg);display:grid;place-items:center;font:700 .95rem var(--head)}
+ol.steps b{display:block}ol.steps code{display:inline-block;margin-top:4px}
+.subnet{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;max-width:480px}
+.subnet i,.subnet button{aspect-ratio:1;border-radius:3px;background:color-mix(in srgb,var(--line) 70%,transparent);border:0;padding:0}
+.subnet button{background:var(--open);cursor:pointer}.subnet button:hover,.subnet button[aria-pressed=true]{outline:3px solid var(--ink)}
+#info{margin-top:14px;min-height:3.4em}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:8px}
+figure{margin:0}figure img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.ph{display:none;aspect-ratio:16/10;border:2px dashed var(--line);border-radius:8px;place-items:center;text-align:center;padding:14px;color:var(--muted);font-size:.9rem}
+figcaption{font-size:.9rem;color:var(--muted);margin-top:6px}
+ul.tick{padding-left:20px}ul.tick li{margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;list-style:none}.chips li{border:1px solid var(--line);background:var(--surface);padding:5px 12px;border-radius:99px;font-size:.92rem}
+details{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-bottom:10px}
+summary{cursor:pointer;padding:14px 18px;font-weight:500}details[open] summary{border-bottom:1px solid var(--line)}details p{margin:0;padding:14px 18px;color:var(--muted)}
+pre.tree{background:var(--term);color:var(--term-ink);padding:18px;border-radius:8px;overflow-x:auto;font:400 .85rem/1.6 var(--mono)}
+.note{border-left:4px solid var(--accent);padding:8px 16px;color:var(--muted);margin:18px 0}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:.95rem}
+@media (max-width:760px){.hero .grid,.two{grid-template-columns:1fr}.nav nav{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cur{animation:none}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+<a class="brand" href="#top">Seerat Fatima</a>
+<nav aria-label="Sections"><a href="#lab">Lab</a><a href="#method">Method</a><a href="#results">Results</a><a href="#risks">Risks</a><a href="#learned">Learned</a><a href="#qa">Q&amp;A</a><a href="#repo">Repo</a></nav>
+</div></header>
+
+<main id="top">
+<section class="hero"><div class="wrap grid">
+<div>
+<p class="lede" style="margin:0 0 10px;font-weight:500;color:var(--ink)">Port Scanning: Task 1 · Seerat Fatima</p>
+<h1>I scanned 256 addresses. Three answered.</h1>
+<p class="lede">Task 1 of my cybersecurity internship: use Nmap to find which devices on a local network are listening, what they expose, and what that means for security.</p>
+<ul class="meta"><li>Elevate Labs × MSME, Govt. of India</li><li>Completed 05 Nov 2026</li><li>Task 1 of [total]</li></ul>
+<div class="btns"><a class="btn p" href="#results">See the results</a><a class="btn" href="[YOUR-GITHUB-REPO-URL]">View on GitHub</a></div>
+</div>
+<div class="term" role="img" aria-label="Terminal showing an Nmap SYN scan of 10.0.2.0/24 finding 3 hosts up"><div class="bar">kali@kali: ~</div><div id="t"></div></div>
+</div></section>
+
+<section id="objective"><div class="wrap two">
+<div><h2>Objective</h2><p>Learn how to discover open ports on devices in a local network, in order to understand <strong>network exposure</strong> and the basics of <strong>network reconnaissance</strong>.</p></div>
+<div class="card"><h3 style="margin-top:0">Tools</h3><p style="margin:0">Nmap 7.99 (free) on Kali Linux in a VirtualBox VM. Wireshark was optional and is planned as a next step.</p></div>
+</div></section>
+
+<section id="lab"><div class="wrap">
+<h2>Lab environment</h2>
+<div class="tw"><table>
+<tr><th>Item</th><th>Detail</th></tr>
+<tr><td>Scanner machine</td><td>Kali Linux (VirtualBox VM)</td></tr>
+<tr><td>Scanner IP</td><td><code>10.0.2.15/24</code> on <code>eth0</code></td></tr>
+<tr><td>Scanner MAC</td><td><code>08:00:27:5a:87:bc</code></td></tr>
+<tr><td>Range scanned</td><td><code>10.0.2.0/24</code> (256 addresses)</td></tr>
+<tr><td>Other interfaces</td><td><code>lo</code> 127.0.0.1, <code>docker0</code> 172.17.0.1/16 (down)</td></tr>
+</table></div>
+<p class="note">The 10.0.2.0/24 range is the default VirtualBox NAT network. <code>10.0.2.2</code> is the gateway (my Windows host), <code>10.0.2.3</code> is the virtual DNS server and <code>10.0.2.15</code> is the VM itself. I only scanned my own lab, which I own and am authorised to test.</p>
+</div></section>
+
+<section id="method"><div class="wrap">
+<h2>Method</h2>
+<ol class="steps">
+<li><div><b>Find my IP and network range</b><code>ip a</code></div></li>
+<li><div><b>Scan my own machine as a baseline</b><code>nmap 10.0.2.15</code></div></li>
+<li><div><b>Run a TCP SYN scan of the subnet</b><code>sudo nmap -sS 10.0.2.0/24</code></div></li>
+<li><div><b>Add service and version detection</b><code>sudo nmap -sS -sV 10.0.2.0/24</code></div></li>
+<li><div><b>Record hosts, ports and services, then research the risks</b>See Results and Risks below.</div></li>
+<li><div><b>Save the output for the repository</b><code>sudo nmap -sS -sV 10.0.2.0/24 -oN scan_results.txt -oX scan_results.xml</code></div></li>
+</ol>
+</div></section>
+
+<section id="results"><div class="wrap">
+<h2>Results</h2>
+<p>Each square is one address in <code>10.0.2.0/24</code>. The lit squares are the three hosts that answered. Select one to see what it exposed.</p>
+<div class="subnet" id="subnet" role="group" aria-label="Map of 256 addresses; three hosts are active"></div>
+<div id="info" class="card" aria-live="polite">Select a highlighted address.</div>
+
+<h3>Scans run</h3>
+<div class="tw"><table>
+<tr><th>Command</th><th>Started</th><th>Duration</th><th>Hosts up</th></tr>
+<tr><td><code>nmap 10.0.2.15</code></td><td>09:10</td><td>211.14 s</td><td>1</td></tr>
+<tr><td><code>nmap -sS 10.0.2.0/24</code></td><td>09:20</td><td>219.85 s</td><td>3</td></tr>
+<tr><td><code>nmap -sS -sV 10.0.2.0/24</code></td><td>09:24</td><td>231.54 s</td><td>3</td></tr>
+</table></div>
+
+<h3>Hosts and open ports</h3>
+<div class="tw"><table>
+<tr><th>Host</th><th>Role</th><th>Port</th><th>Service</th><th>Version (<code>-sV</code>)</th></tr>
+<tr><td>10.0.2.2</td><td>Windows host / gateway</td><td><span class="pill">135/tcp</span></td><td>msrpc</td><td>Microsoft Windows RPC</td></tr>
+<tr><td>10.0.2.2</td><td></td><td><span class="pill">445/tcp</span></td><td>microsoft-ds (SMB)</td><td>Not confirmed (<code>?</code>)</td></tr>
+<tr><td>10.0.2.2</td><td></td><td><span class="pill">5357/tcp</span></td><td>http (wsdapi)</td><td>Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</td></tr>
+<tr><td>10.0.2.3</td><td>Virtual DNS server</td><td><span class="pill">53/tcp</span></td><td>domain</td><td>Unbound</td></tr>
+<tr><td>10.0.2.15</td><td>My Kali VM</td><td><span class="pill f">none</span></td><td colspan="2">All 1000 ports filtered</td></tr>
+</table></div>
+<p class="note">10.0.2.2 had 997 filtered ports and 10.0.2.3 had 999. Nmap fingerprinted 10.0.2.2 as Windows (<code>cpe:/o:microsoft:windows</code>). The MAC <code>52:54:00:12:35:00</code> shows as a QEMU virtual NIC, so the targets are virtual devices.</p>
+
+<h3>Evidence: terminal screenshots</h3>
+<div class="shots">
+<figure><img src="screenshots/01_ip_a_and_first_scan.png" alt="Output of ip a and the start of the first Nmap scan" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="ph">Add screenshots/01_ip_a_and_first_scan.png</div><figcaption>ip a and first scan</figcaption></figure>
+<figure><img src="screenshots/02_syn_scan_subnet.png" alt="Nmap SYN scan results for 10.0.2.0/24" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="ph">Add screenshots/02_syn_scan_subnet.png</div><figcaption>SYN scan of the subnet</figcaption></figure>
+<figure><img src="screenshots/03_service_scan_part1.png" alt="Start of the Nmap service version scan" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="ph">Add screenshots/03_service_scan_part1.png</div><figcaption>Service scan, start</figcaption></figure>
+<figure><img src="screenshots/04_service_scan_complete.png" alt="Completed Nmap service scan showing 3 hosts up" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="ph">Add screenshots/04_service_scan_complete.png</div><figcaption>Service scan, complete</figcaption></figure>
+</div>
+<p><a href="scan_results.txt">Raw scan output (txt)</a> · <a href="scan_results.xml">XML</a></p>
+</div></section>
+
+<section id="risks"><div class="wrap">
+<h2>Services found and their risks</h2>
+<div class="tw"><table>
+<tr><th>Port</th><th>Service</th><th>What it does</th><th>Potential risk</th></tr>
+<tr><td>135</td><td>MS RPC</td><td>Lets Windows services find and call each other remotely</td><td>Endpoint enumeration; historically exploited (Blaster worm)</td></tr>
+<tr><td>445</td><td>SMB</td><td>Windows file and printer sharing</td><td>Ransomware spread, lateral movement, EternalBlue-class flaws, null sessions</td></tr>
+<tr><td>5357</td><td>WSDAPI (HTTP)</td><td>Device discovery over web services</td><td>Information disclosure; needless exposure on untrusted networks</td></tr>
+<tr><td>53</td><td>DNS (Unbound)</td><td>Resolves domain names</td><td>Amplification or cache poisoning if misconfigured; DNS enumeration</td></tr>
+</table></div>
+<div class="two" style="margin-top:22px">
+<div><h3 style="margin-top:0">Assessment</h3><ul class="tick"><li>The Windows host exposes three Windows services. SMB and RPC should never be reachable from untrusted segments.</li><li>Most ports were filtered, which suggests a firewall is dropping unsolicited traffic.</li><li>The Kali VM exposed no open ports, so its attack surface is minimal.</li></ul></div>
+<div><h3 style="margin-top:0">Recommended hardening</h3><ul class="tick"><li>Block 135 and 445 at the firewall unless required; restrict to trusted IPs.</li><li>Disable SMBv1 and patch Windows.</li><li>Turn off unneeded discovery services (SSDP, WSD).</li><li>Limit DNS to internal clients and update Unbound.</li><li>Re-scan regularly for unexpected ports.</li></ul></div>
+</div>
+</div></section>
+
+<section id="learned"><div class="wrap">
+<h2>What I learned</h2>
+<h3 style="margin-top:0">Areas covered</h3>
+<ul class="chips"><li>Host discovery</li><li>IP addressing and CIDR</li><li>TCP SYN scanning</li><li>Service and version detection</li><li>Port states</li><li>OS fingerprinting</li><li>Risk mapping</li><li>Reporting (txt/XML)</li></ul>
+<h3>Practical takeaways</h3>
+<ul class="tick">
+<li><strong>SYN scans need root.</strong> <code>-sS</code> uses raw packets, so it needed <code>sudo</code>.</li>
+<li><strong>Filtered ports slow scans down.</strong> They give no reply, so Nmap waits and retries. My scans took 3–4 minutes.</li>
+<li><strong>Filtered is not closed.</strong> A firewall is silently dropping packets, so Nmap cannot say whether a service sits behind it.</li>
+<li><strong><code>-sV</code> adds real detail.</strong> It turned a plain <code>http</code> on 5357 into Microsoft HTTPAPI httpd 2.0 and named the DNS server as Unbound.</li>
+<li><strong>Scanning from another host can differ</strong> from scanning a machine from itself.</li>
+<li><strong>Scan only with permission.</strong> Unauthorised scanning can be illegal.</li>
+</ul>
+</div></section>
+
+<section id="qa"><div class="wrap">
+<h2>Interview questions</h2>
+<details><summary>What is an open port?</summary><p>A port where a service is listening and accepting connections, for example 445 for SMB.</p></details>
+<details><summary>How does Nmap perform a TCP SYN scan?</summary><p>It sends a SYN. A SYN/ACK means open, and Nmap replies with RST instead of finishing the handshake, which is why it is called half-open. A RST means closed. No reply means filtered.</p></details>
+<details><summary>What risks are associated with open ports?</summary><p>Each one is an entry point: vulnerable or misconfigured services, brute-force attacks, information leakage and lateral movement.</p></details>
+<details><summary>What is the difference between TCP and UDP scanning?</summary><p>TCP gives clear handshake responses, so scans are fast and reliable. UDP is connectionless: open ports often stay silent (open|filtered) and closed ports return ICMP unreachable, so scans are slow and less certain.</p></details>
+<details><summary>How can open ports be secured?</summary><p>Close unused services, use firewalls, patch software, enforce strong authentication and encryption, segment the network and monitor with IDS/IPS.</p></details>
+<details><summary>What is a firewall’s role regarding ports?</summary><p>It allows or blocks traffic by rule (IP, port, protocol) so only required services are exposed.</p></details>
+<details><summary>What is a port scan and why do attackers perform it?</summary><p>It probes a host for open ports and services. Attackers use it to map targets and find vulnerable services before attacking.</p></details>
+<details><summary>How does Wireshark complement port scanning?</summary><p>Nmap reports port states. Wireshark shows the actual packets (SYN, SYN/ACK, RST), so you can verify how the scan works and spot scans on your own network.</p></details>
+</div></section>
+
+<section id="repo"><div class="wrap">
+<h2>Repository structure</h2>
+<pre class="tree">task1-network-port-scan/
+├── index.html              portfolio site (GitHub Pages)
+├── README.md
+├── TECHNICAL_SPEC.txt
+├── scan_results.txt        Nmap normal output
+├── scan_results.xml        Nmap XML output
+└── screenshots/
+    ├── 01_ip_a_and_first_scan.png
+    ├── 02_syn_scan_subnet.png
+    ├── 03_service_scan_part1.png
+    └── 04_service_scan_complete.png</pre>
+<h3>Next steps</h3>
+<ul class="tick"><li>Capture the scan in Wireshark and study the SYN, SYN/ACK and RST exchange.</li><li>Run a UDP scan (<code>sudo nmap -sU --top-ports 50 10.0.2.0/24</code>) and compare it with TCP.</li><li>Try <code>nmap -sC</code> and <code>--script vuln</code> on my own test targets.</li></ul>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+<p><strong>Seerat Fatima</strong> · Cybersecurity intern · <a href="[YOUR-GITHUB-URL]">GitHub</a> · <a href="[YOUR-LINKEDIN-URL]">LinkedIn</a> · <a href="mailto:fatiibano645@gmail.com">fatiibano645@gmail.com</a></p>
+<p>Educational project run in an isolated lab. Scans were limited to systems I own.</p>
+</div></footer>
+
+<script>
+(function(){
+var hosts={2:{ip:"10.0.2.2",role:"Windows host / gateway",ports:["135/tcp msrpc, Microsoft Windows RPC","445/tcp microsoft-ds (SMB)","5357/tcp http, Microsoft HTTPAPI httpd 2.0"],f:"997 filtered"},
+3:{ip:"10.0.2.3",role:"Virtual DNS server",ports:["53/tcp domain, Unbound"],f:"999 filtered"},
+15:{ip:"10.0.2.15",role:"My Kali VM (scanner)",ports:[],f:"all 1000 filtered"}};
+var g=document.getElementById("subnet"),info=document.getElementById("info");
+for(var i=0;i<256;i++){
+ if(hosts[i]){var b=document.createElement("button");b.type="button";b.setAttribute("aria-pressed","false");b.setAttribute("aria-label","Host "+hosts[i].ip+", "+hosts[i].role);b.dataset.n=i;g.appendChild(b)}
+ else{var c=document.createElement("i");c.setAttribute("aria-hidden","true");g.appendChild(c)}
+}
+g.addEventListener("click",function(e){
+ var b=e.target.closest("button");if(!b)return;
+ g.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed","false")});
+ b.setAttribute("aria-pressed","true");
+ var h=hosts[b.dataset.n];
+ info.innerHTML="<strong>"+h.ip+"</strong> · "+h.role+"<br>"+(h.ports.length?"Open: "+h.ports.join("; "):"No open ports")+" · "+h.f;
+});
+var L=[["d","$ sudo nmap -sS 10.0.2.0/24"],["","Starting Nmap 7.99 at 2026-11-05 09:20"],["","Nmap scan report for 10.0.2.2"],["o","135/tcp  open  msrpc"],["o","445/tcp  open  microsoft-ds"],["o","5357/tcp open  wsdapi"],["","Nmap scan report for 10.0.2.3"],["o","53/tcp   open  domain"],["","Nmap scan report for 10.0.2.15"],["d","all 1000 ports filtered"],["c","Nmap done: 256 IP addresses (3 hosts up)"]];
+var t=document.getElementById("t"),still=window.matchMedia("(prefers-reduced-motion: reduce)").matches,k=0;
+function add(){var l=L[k],d=document.createElement("div");d.className="ln "+l[0];d.textContent=l[1];t.appendChild(d);k++}
+if(still){while(k<L.length)add()}
+else{(function s(){if(k<L.length){add();setTimeout(s,k==1?500:260)}else{var c=document.createElement("span");c.className="cur";t.lastChild.appendChild(c)}})()}
+})();
+</script>
+</body>
+</html>
