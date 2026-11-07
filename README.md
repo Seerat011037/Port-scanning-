@@ -1,7 +1,7 @@
-# Port Scanning: Task 1, Scan Your Local Network for Open Ports
+# Port Scanning: Task 1, Scan Local Network for Open Ports
 
 **Cyber Security Internship Portfolio | Elevate Labs (MSME, Govt. of India)**
-**Author:** Seerat Fatima | **Email:** fatiibano645@gmail.com | **Date completed:** 05 Nov 2026 | **Task:** 1 of [total]
+**Author:** Seerat Fatima | **Email:** fatiibano645@gmail.com | **Date completed:** 05 Nov 2026 | **Task:** 1 
 
 ---
 
