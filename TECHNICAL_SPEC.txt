@@ -1,4 +1,4 @@
-# TECHNICAL SPECIFICATION: Port Scanning (Task 1) Cybersecurity Portfolio Website
+# TECHNICAL SPECIFICATION: Port Scanning (Task 1) Cybersecurity 
 
 Version: 1.0 | Owner: Seerat Fatima | Contact: fatiibano645@gmail.com | Last updated: [DATE]
 Hosting: GitHub Pages (free) | Stack: static HTML, CSS, vanilla JavaScript
