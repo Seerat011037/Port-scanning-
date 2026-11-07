@@ -153,31 +153,3 @@ Probing a host for open ports and services. Attackers use it to map targets and 
 
 **8. How does Wireshark complement port scanning?**
 Nmap tells you port states. Wireshark shows the actual packets (SYN, SYN/ACK, RST), so you can verify how the scan works and detect scans on your own network.
-
----
-
-## 9. Repository Structure
-
-```
-task1-network-port-scan/
-├── README.md
-├── scan_results.txt        # Nmap normal output
-├── scan_results.xml        # Nmap XML output (optional)
-└── screenshots/
-    ├── 01_ip_a_and_first_scan.png
-    ├── 02_syn_scan_subnet.png
-    ├── 03_service_scan_part1.png
-    └── 04_service_scan_complete.png
-```
-
----
-
-## 10. Next Steps
-
-- Capture the scan with Wireshark and analyse the SYN/SYN-ACK/RST exchange.
-- Try a UDP scan (`sudo nmap -sU --top-ports 50 10.0.2.0/24`) and compare with TCP.
-- Run `nmap -sC` and `--script vuln` on my own test targets.
-
----
-
-*Disclaimer: This project was done in an isolated lab for educational purposes only.*
